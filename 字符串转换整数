@@ -1,0 +1,44 @@
+class Solution {
+public:
+    int myAtoi(string str) {
+        if(str.empty()){return 0;}
+        int n=str.size();
+        int result=0;
+        bool begin=true;
+        bool positive=false;
+        for(int i=0;i<n;i++){
+            if(begin){
+                if(str[i]!=' '){begin= false;}
+            }
+            
+            else if (!isVild(str[i])){return 0;}
+            else{
+               if((!positive)&&(str[i]=='-'){positive=true;} 
+                else{
+                    if(str[i]=='-'){return 0;}
+                    if(result*10>INT_Max&&!positive){return INT_Max;}
+                    if(result*10>INT_Max&&positive){return INT_MIN;}
+                    if(!isVild(str[i])){break;}
+                    result = str[i]*10+result;
+                }
+                
+            }
+            
+            
+            
+        }
+        if(positive){result=-1*result;}
+        return result;
+        
+        
+    }
+    
+private:
+    bool isVild(char &temp){
+        if(temp="-"){return true}
+        if(temp>='0'&&temp<='9'){return true}
+        else{return false;}
+        
+    }
+    
+};
