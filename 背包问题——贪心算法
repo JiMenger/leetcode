@@ -1,0 +1,38 @@
+//背包问题——贪心算法
+
+private static int bag_problem(int[] values, int[] weights) {
+    int currentSpace = totalSpace;       // 当前背包剩余的空间
+    int currentValue = 0;                // 当前背包的价值
+    int goodsNumber = values.length;    // 商品数量
+
+    // 用来表示商品是否被装载，0表示没有，1表示装载
+    int[] isLoad = new int[goodsNumber];
+    for (int i = 0;i < goodsNumber;i++) {
+        isLoad[i] = 0;
+    }   // end for
+
+    while (true) {
+        int maxValue = 0;
+        int postion = 0;        // 记录位置信息
+
+        for (int j = 0; j < goodsNumber; j++) {
+            // 如果物品已经被装载则跳过
+            if (isLoad[j] == 1) continue;
+
+            if (values[j] > maxValue && currentSpace >= weights[j]) {
+                maxValue = values[j];
+                postion = j;
+            }
+        }   // end inner for:找到了当前最大的values值
+
+        // 背包已经装不下东西了
+        if (maxValue == 0) break;
+
+        // 装载物品
+        currentSpace = currentSpace - weights[postion];
+        currentValue += values[postion];
+        isLoad[postion] = 1;
+    }
+
+    return currentValue;
+}
